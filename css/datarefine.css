@@ -1,0 +1,410 @@
+/* 
+ * Styles pour le jeu de raffinement de données Severance
+ * Ce fichier contient tous les styles nécessaires pour l'expérience MDR
+ */
+
+:root {
+    --severance-blue: #aef6ff;
+    --severance-dark: #0a1e3b;
+    --severance-accent: #56cbdb;
+    --effrayant-color: #ecc94b;
+    --triste-color: #3182ce;
+    --joyeux-color: #48bb78;
+    --malveillant-color: #e53e3e;
+}
+
+.data-refinement-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    font-family: 'VT323', monospace;
+    color: var(--severance-blue);
+}
+
+.data-refinement-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 10, 20, 0.95);
+    z-index: -1;
+}
+
+.data-refinement-interface {
+    position: relative;
+    width: 96%;
+    max-width: 1200px;
+    height: 90vh;
+    margin: 2vh auto;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--severance-dark);
+    border: 1px solid var(--severance-blue);
+    box-shadow: 0 0 20px rgba(174, 246, 255, 0.2), inset 0 0 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+/* En-tête du jeu */
+.data-refinement-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--severance-blue);
+    background: rgba(0, 0, 0, 0.3);
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.dr-logo {
+    flex-shrink: 0;
+}
+
+.dr-title {
+    margin: 0;
+    font-size: 1.8rem;
+    flex-grow: 1;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(174, 246, 255, 0.5);
+}
+
+.dr-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.dr-progress-text {
+    font-size: 1.2rem;
+    width: 40px;
+}
+
+.dr-progress-bar {
+    width: 150px;
+    height: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--severance-blue);
+}
+
+.dr-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #005f73, #0a9396, #94d2bd);
+    transition: width 0.5s ease;
+}
+
+.dr-session-info {
+    font-size: 1rem;
+    opacity: 0.7;
+    margin-left: 20px;
+}
+
+/* Section d'intro */
+.data-refinement-intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding: 20px;
+}
+
+.dr-intro-text {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    animation: pulse 2s infinite alternate;
+}
+
+.dr-loader {
+    width: 80%;
+    max-width: 400px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--severance-blue);
+    overflow: hidden;
+}
+
+.dr-loader-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--severance-blue), #bbe4e9);
+    animation: load 5s forwards cubic-bezier(0.1, 0.4, 0.2, 1);
+}
+
+.dr-lumon-message {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    transition: opacity 1s ease;
+}
+
+/* Espace de travail */
+.data-refinement-workspace {
+    flex-grow: 1;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.data-numbers-area {
+    border-radius: 4px;
+    overflow: auto;
+    max-height: 300px;
+}
+
+.data-numbers-container {
+    min-height: 100px;
+}
+
+.data-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    min-width: 100px;
+    min-height: 60px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid var(--severance-blue);
+    border-radius: 6px;
+    font-size: 1.4rem;
+    color: var(--severance-blue);
+    cursor: grab;
+    margin: 5px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-shadow: 0 0 5px var(--severance-blue);
+    user-select: none;
+    animation: distort 3s infinite alternate;
+    animation-timing-function: ease-in-out;
+    letter-spacing: 3px;
+}
+
+.data-number:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(174, 246, 255, 0.4);
+}
+
+.data-number.dragging {
+    opacity: 0.8;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(174, 246, 255, 0.6);
+}
+
+.data-number:nth-child(2n) {
+    animation-delay: 0.5s;
+}
+
+.data-number:nth-child(3n) {
+    animation-delay: 1.2s;
+}
+
+.data-number:nth-child(4n) {
+    animation-delay: 0.7s;
+}
+
+/* Style pour les nombres une fois qu'ils sont raffinés */
+.refined-number {
+    padding: 10px;
+    margin: 4px;
+    min-width: 80px;
+    min-height: 40px;
+    font-size: 1.1rem;
+    box-shadow: none;
+    opacity: 0.9;
+    animation: none !important;
+    transition: transform 0.3s ease;
+}
+
+.refined-number:hover {
+    transform: scale(1.05);
+}
+
+/* Conteneurs des catégories */
+.data-bins-area {
+    height: 100%;
+    min-height: 300px;
+}
+
+.data-bin {
+    display: flex;
+    flex-direction: column;
+}
+
+.bin-header {
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-transform: uppercase;
+}
+
+.bin-drop-zone {
+    flex-grow: 1;
+    border-radius: 4px;
+    overflow-y: auto;
+    transition: background 0.3s ease;
+    height: 100%;
+    min-height: 150px;
+}
+
+.bin-drop-zone.highlight {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Couleurs spécifiques pour les bins */
+.text-yellow-500 {
+    color: var(--effrayant-color);
+}
+.border-yellow-500 {
+    border-color: var(--effrayant-color);
+}
+.text-blue-500 {
+    color: var(--triste-color);
+}
+.border-blue-500 {
+    border-color: var(--triste-color);
+}
+.text-green-500 {
+    color: var(--joyeux-color);
+}
+.border-green-500 {
+    border-color: var(--joyeux-color);
+}
+.text-red-500 {
+    color: var(--malveillant-color);
+}
+.border-red-500 {
+    border-color: var(--malveillant-color);
+}
+
+/* Écran de complétion */
+.data-refinement-complete {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding: 20px;
+}
+
+.dr-complete-text {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px rgba(174, 246, 255, 0.8);
+}
+
+.dr-complete-subtext {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+.dr-complete-stats {
+    margin: 20px 0;
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dr-reward {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.dr-reward-text {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: #94d2bd;
+}
+
+.dr-button {
+    margin-top: 20px;
+    padding: 10px 30px;
+    background: transparent;
+    border: 2px solid var(--severance-blue);
+    color: var(--severance-blue);
+    font-family: 'VT323', monospace;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dr-button:hover {
+    background: rgba(174, 246, 255, 0.1);
+    box-shadow: 0 0 10px rgba(174, 246, 255, 0.4);
+}
+
+/* Animations et effets */
+@keyframes distort {
+    0% { transform: scale(1) rotate(0deg); filter: brightness(1) hue-rotate(0deg); }
+    33% { transform: scale(1.02) rotate(0.3deg); filter: brightness(1.05) hue-rotate(2deg); }
+    66% { transform: scale(0.99) rotate(-0.3deg); filter: brightness(0.98) hue-rotate(-2deg); }
+    100% { transform: scale(1) rotate(0deg); filter: brightness(1) hue-rotate(0deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.8; text-shadow: 0 0 5px rgba(174, 246, 255, 0.5); }
+    50% { opacity: 1; text-shadow: 0 0 15px rgba(174, 246, 255, 0.8); }
+}
+
+@keyframes load {
+    0% { width: 0%; }
+    20% { width: 20%; }
+    50% { width: 60%; }
+    75% { width: 85%; }
+    100% { width: 100%; }
+}
+
+.blink {
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    0%, 49% { opacity: 0.7; }
+    50%, 100% { opacity: 1; }
+}
+
+/* Effet CRT */
+.data-refinement-interface::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.1) 50%
+    );
+    background-size: 100% 3px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    .dr-title {
+        font-size: 1.4rem;
+    }
+    
+    .dr-progress-bar {
+        width: 100px;
+    }
+    
+    .data-number {
+        padding: 12px;
+        min-width: 80px;
+        font-size: 1.2rem;
+    }
+    
+    .refined-number {
+        padding: 8px;
+        min-width: 70px;
+        font-size: 1rem;
+    }
+}
