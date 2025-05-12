@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Macro Data Refinement</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      :root {
+        --bg-color: #010A13;
+        --fg-color: #ABFFE9;
+        --accent-color: #1EEFFF;
+        --wo-color: #05C3A8;
+        --fc-color: #1EEFFF;
+        --dr-color: #DF81D5;
+        --ma-color: #F9ECBB;
+      }
+      
+      body, html {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--fg-color);
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        height: 100%;
+      }
+      
+      .game-container {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .header {
+        height: 60px;
+        background-color: rgba(1, 10, 19, 0.7);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        border-bottom: 1px solid var(--accent-color);
+      }
+      
+      .file-info {
+        display: flex;
+        align-items: center;
+      }
+      
+      .file-name {
+        font-size: 20px;
+        margin-right: 20px;
+      }
+      
+      .coordinates {
+        font-size: 16px;
+        color: var(--accent-color);
+      }
+      
+      .progress {
+        display: flex;
+        align-items: center;
+      }
+      
+      .progress-text {
+        margin-right: 10px;
+      }
+      
+      .timer {
+        font-size: 20px;
+        color: var(--accent-color);
+      }
+      
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        position: relative;
+      }
+      
+      .grid-container {
+        display: flex;
+        flex-direction: column;
+        margin-top: 50px;
+      }
+      
+      .grid-row {
+        display: flex;
+        margin-bottom: 15px;
+      }
+      
+      .grid-cell {
+        width: 80px;
+        height: 80px;
+        background-color: rgba(1, 10, 19, 0.5);
+        border: 1px solid var(--fg-color);
+        margin-right: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 32px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+      }
+      
+      .grid-cell:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px var(--accent-color);
+      }
+      
+      .grid-cell.active {
+        animation: shake 0.5s infinite;
+      }
+      
+      @keyframes shake {
+        0%, 100% { transform: translate(0, 0); }
+        25% { transform: translate(-2px, 2px); }
+        50% { transform: translate(2px, -2px); }
+        75% { transform: translate(-2px, -2px); }
+      }
+      
+      .bins-container {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        max-width: 800px;
+        margin-top: 50px;
+      }
+      
+      .bin {
+        width: 120px;
+        height: 100px;
+        border: 2px solid var(--fg-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .bin:hover {
+        transform: translateY(-5px);
+      }
+      
+      .bin-wo { border-color: var(--wo-color); color: var(--wo-color); }
+      .bin-fc { border-color: var(--fc-color); color: var(--fc-color); }
+      .bin-dr { border-color: var(--dr-color); color: var(--dr-color); }
+      .bin-ma { border-color: var(--ma-color); color: var(--ma-color); }
+      
+      .bin-label {
+        font-size: 24px;
+        margin-bottom: 5px;
+      }
+      
+      .bin-count {
+        font-size: 32px;
+      }
+      
+      .completion-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(1, 10, 19, 0.95);
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+      
+      .completion-content {
+        background-color: var(--bg-color);
+        border: 1px solid var(--accent-color);
+        padding: 40px;
+        text-align: center;
+        max-width: 500px;
+      }
+      
+      .completion-title {
+        font-size: 28px;
+        color: var(--accent-color);
+        margin-bottom: 20px;
+      }
+      
+      .completion-button {
+        background: none;
+        border: 1px solid var(--accent-color);
+        color: var(--fg-color);
+        padding: 10px 20px;
+        font-size: 18px;
+        margin-top: 20px;
+        cursor: pointer;
+        font-family: 'Courier New', monospace;
+      }
+      
+      .completion-button:hover {
+        background-color: rgba(30, 239, 255, 0.2);
+      }
+      
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--bg-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        transition: opacity 0.5s ease;
+      }
+      
+      .loading-title {
+        font-size: 28px;
+        color: var(--accent-color);
+        margin-bottom: 30px;
+      }
+      
+      .loading-bar {
+        width: 300px;
+        height: 10px;
+        background-color: rgba(30, 239, 255, 0.2);
+        position: relative;
+        margin-bottom: 20px;
+      }
+      
+      .loading-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0%;
+        background-color: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+      
+      .loading-text {
+        font-size: 16px;
+        opacity: 0.8;
+      }
+      
+      /* Effets visuels */
+      .scanlines {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+          to bottom,
+          transparent 0px,
+          rgba(0, 0, 0, 0.05) 1px,
+          transparent 2px
+        );
+        pointer-events: none;
+        z-index: 10;
+        opacity: 0.3;
+      }
+      
+      .crt-flicker {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(174, 246, 255, 0);
+        pointer-events: none;
+        animation: flicker 8s infinite;
+        z-index: 10;
+      }
+      
+      @keyframes flicker {
+        0% { background: rgba(174, 246, 255, 0); }
+        1% { background: rgba(174, 246, 255, 0.03); }
+        1.5% { background: rgba(174, 246, 255, 0); }
+        2% { background: rgba(174, 246, 255, 0); }
+        2.2% { background: rgba(174, 246, 255, 0.03); }
+        2.5% { background: rgba(174, 246, 255, 0); }
+        56% { background: rgba(174, 246, 255, 0); }
+        56.3% { background: rgba(174, 246, 255, 0.03); }
+        56.5% { background: rgba(174, 246, 255, 0); }
+        98% { background: rgba(174, 246, 255, 0); }
+        99% { background: rgba(174, 246, 255, 0.04); }
+        99.5% { background: rgba(174, 246, 255, 0); }
+        100% { background: rgba(174, 246, 255, 0); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scanlines"></div>
+    <div class="crt-flicker"></div>
+    
+    <div class="loading-overlay" id="loading-overlay">
+      <h2 class="loading-title">INITIALISATION DU SYSTÈME MDR</h2>
+      <div class="loading-bar">
+        <div class="loading-progress" id="loading-progress"></div>
+      </div>
+      <p class="loading-text" id="loading-text">Chargement du système de raffinement de données...</p>
+    </div>
+    
+    <div class="game-container">
+      <header class="header">
+        <div class="file-info">
+          <div class="file-name" id="file-name">SIENA</div>
+          <div class="coordinates" id="coordinates">0xA3B549 : 0xF37D21</div>
+        </div>
+        <div class="progress">
+          <div class="progress-text" id="progress-text">0/20</div>
+          <div class="timer" id="timer">00:00</div>
+        </div>
+      </header>
+      
+      <main class="main-content">
+        <div class="grid-container" id="grid-container">
+          <!-- La grille sera générée par JavaScript -->
+        </div>
+        
+        <div class="bins-container">
+          <div class="bin bin-wo" data-bin="WO">
+            <div class="bin-label">WO</div>
+            <div class="bin-count" id="bin-wo-count">0</div>
+          </div>
+          <div class="bin bin-fc" data-bin="FC">
+            <div class="bin-label">FC</div>
+            <div class="bin-count" id="bin-fc-count">0</div>
+          </div>
+          <div class="bin bin-dr" data-bin="DR">
+            <div class="bin-label">DR</div>
+            <div class="bin-count" id="bin-dr-count">0</div>
+          </div>
+          <div class="bin bin-ma" data-bin="MA">
+            <div class="bin-label">MA</div>
+            <div class="bin-count" id="bin-ma-count">0</div>
+          </div>
+        </div>
+      </main>
+    </div>
+    
+    <div class="completion-screen" id="completion-screen">
+      <div class="completion-content">
+        <h2 class="completion-title">RAFFINEMENT TERMINÉ</h2>
+        <p>Félicitations. Vous avez terminé avec succès votre tâche de raffinement de données.</p>
+        <p>Données traitées: <span id="completion-file">SIENA</span></p>
+        <p>Coordonnées: <span id="completion-coordinates">0xA3B549 : 0xF37D21</span></p>
+        <p>ACCÈS AU PROFIL EMPLOYÉ ACCORDÉ</p>
+        <button id="continue-button" class="completion-button">CONTINUER</button>
+      </div>
+    </div>
+    
+    <script>
+      // Variables globales
+      const TARGET_NUMBERS = 20; // Nombre de chiffres à raffiner pour terminer
+      let refinedCount = 0;
+      let selectedCell = null;
+      let startTime = null;
+      let timerInterval = null;
+      let gridSize = { rows: 4, cols: 5 }; // 4 lignes x 5 colonnes
+      
+      // Données des bins
+      const bins = {
+        WO: { count: 0, color: 'var(--wo-color)' },
+        FC: { count: 0, color: 'var(--fc-color)' },
+        DR: { count: 0, color: 'var(--dr-color)' },
+        MA: { count: 0, color: 'var(--ma-color)' }
+      };
+      
+      // Liste des noms de fichiers possibles
+      const fileNames = [
+        'SIENA', 'NANNING', 'NARVA', 'OCULA', 'KINGSPORT',
+        'LABRADOR', 'LE MARS', 'LONGBRANCH', 'MOONBEAM', 'MINSK'
+      ];
+      
+      // Générer des coordonnées hexadécimales aléatoires
+      function generateCoordinates() {
+        const hex = () => Math.floor(Math.random() * 16777215).toString(16).toUpperCase().padStart(6, '0');
+        return `0x${hex()} : 0x${hex()}`;
+      }
+      
+      // Initialiser l'écran de chargement
+      function initLoading() {
+        const progressBar = document.getElementById('loading-progress');
+        const loadingText = document.getElementById('loading-text');
+        const loadingMessages = [
+          'Chargement du système de raffinement de données...',
+          'Initialisation des algorithmes neuronaux...',
+          'Calibration des capteurs émotionnels...',
+          'Connexion au serveur Lumon Industries...',
+          'Préparation des fichiers MDR...'
+        ];
+        
+        let progress = 0;
+        let messageIndex = 0;
+        
+        const loadingInterval = setInterval(() => {
+          progress += 1;
+          progressBar.style.width = `${progress}%`;
+          
+          if (progress % 20 === 0 && messageIndex < loadingMessages.length - 1) {
+            loadingText.textContent = loadingMessages[++messageIndex];
+          }
+          
+          if (progress >= 100) {
+            clearInterval(loadingInterval);
+            setTimeout(() => {
+              document.getElementById('loading-overlay').style.opacity = '0';
+              setTimeout(() => {
+                document.getElementById('loading-overlay').style.display = 'none';
+                startGame();
+              }, 500);
+            }, 500);
+          }
+        }, 30);
+      }
+      
+      // Initialiser le jeu
+      function startGame() {
+        // Générer un nom de fichier et des coordonnées aléatoires
+        const fileName = fileNames[Math.floor(Math.random() * fileNames.length)];
+        const coordinates = generateCoordinates();
+        
+        document.getElementById('file-name').textContent = fileName;
+        document.getElementById('coordinates').textContent = coordinates;
+        document.getElementById('completion-file').textContent = fileName;
+        document.getElementById('completion-coordinates').textContent = coordinates;
+        
+        // Générer la grille
+        generateGrid();
+        
+        // Configurer les bins
+        setupBins();
+        
+        // Démarrer le timer
+        startTimer();
+        
+        // Activer des chiffres aléatoirement
+        activateRandomCells();
+      }
+      
+      // Générer la grille de chiffres
+      function generateGrid() {
+        const gridContainer = document.getElementById('grid-container');
+        gridContainer.innerHTML = '';
+        
+        for (let row = 0; row < gridSize.rows; row++) {
+          const gridRow = document.createElement('div');
+          gridRow.className = 'grid-row';
+          
+          for (let col = 0; col < gridSize.cols; col++) {
+            const cell = document.createElement('div');
+            cell.className = 'grid-cell';
+            cell.dataset.row = row;
+            cell.dataset.col = col;
+            cell.dataset.id = `cell-${row}-${col}`;
+            cell.textContent = Math.floor(Math.random() * 10); // Chiffre aléatoire entre 0 et 9
+            
+            cell.addEventListener('click', () => {
+              if (cell.classList.contains('active')) {
+                selectCell(cell);
+              }
+            });
+            
+            gridRow.appendChild(cell);
+          }
+          
+          gridContainer.appendChild(gridRow);
+        }
+      }
+      
+      // Configurer les bins
+      function setupBins() {
+        document.querySelectorAll('.bin').forEach(bin => {
+          bin.addEventListener('click', () => {
+            if (!selectedCell) {
+              return; // Aucune cellule sélectionnée
+            }
+            
+            processBin(bin.dataset.bin);
+          });
+        });
+      }
+      
+      // Activer des cellules aléatoirement
+      function activateRandomCells() {
+        setInterval(() => {
+          if (refinedCount >= TARGET_NUMBERS) {
+            return; // Arrêter d'activer des cellules si l'objectif est atteint
+          }
+          
+          const inactiveCells = Array.from(document.querySelectorAll('.grid-cell:not(.active):not(.refined)'));
+          
+          if (inactiveCells.length > 0) {
+            const activeCount = document.querySelectorAll('.grid-cell.active').length;
+            
+            // Maintenir un maximum de 3 cellules actives à la fois
+            if (activeCount < 3) {
+              const randomCell = inactiveCells[Math.floor(Math.random() * inactiveCells.length)];
+              
+              // Assigner une catégorie aléatoire
+              const categories = Object.keys(bins);
+              randomCell.dataset.category = categories[Math.floor(Math.random() * categories.length)];
+              
+              // Activer la cellule
+              randomCell.classList.add('active');
+              
+              // Désactiver après un certain temps si elle n'est pas raffinée
+              setTimeout(() => {
+                if (!randomCell.classList.contains('refined')) {
+                  randomCell.classList.remove('active');
+                }
+              }, 5000 + Math.random() * 3000); // Entre 5 et 8 secondes
+            }
+          }
+        }, 1000 + Math.random() * 1000); // Intervalle aléatoire entre 1 et 2 secondes
+      }
+      
+      // Sélectionner une cellule
+      function selectCell(cell) {
+        if (selectedCell) {
+          selectedCell.style.boxShadow = '';
+        }
+        
+        selectedCell = cell;
+        cell.style.boxShadow = `0 0 15px var(--accent-color)`;
+      }
+      
+      // Traiter un bin sélectionné
+      function processBin(binType) {
+        if (!selectedCell || !selectedCell.classList.contains('active')) {
+          return;
+        }
+        
+        const cellCategory = selectedCell.dataset.category;
+        
+        if (cellCategory === binType) {
+          // Correct bin!
+          refineCell(selectedCell, binType);
+        } else {
+          // Mauvais bin, ajouter un effet de secousse
+          selectedCell.animate([
+            { transform: 'translateX(-5px)' },
+            { transform: 'translateX(5px)' },
+            { transform: 'translateX(-5px)' },
+            { transform: 'translateX(0)' }
+          ], { duration: 300 });
+        }
+        
+        // Désélectionner la cellule
+        selectedCell.style.boxShadow = '';
+        selectedCell = null;
+      }
+      
+      // Raffiner une cellule
+      function refineCell(cell, binType) {
+        // Marquer comme raffinée
+        cell.classList.remove('active');
+        cell.classList.add('refined');
+        cell.textContent = '•';
+        cell.style.opacity = '0.5';
+        
+        // Incrémenter le compteur de bin
+        bins[binType].count++;
+        document.getElementById(`bin-${binType.toLowerCase()}-count`).textContent = bins[binType].count;
+        
+        // Incrémenter le compteur total
+        refinedCount++;
+        document.getElementById('progress-text').textContent = `${refinedCount}/${TARGET_NUMBERS}`;
+        
+        // Vérifier si l'objectif est atteint
+        if (refinedCount >= TARGET_NUMBERS) {
+          setTimeout(showCompletionScreen, 1000);
+        }
+        
+        // Remplacer le chiffre par un nouveau
+        setTimeout(() => {
+          if (refinedCount < TARGET_NUMBERS) {
+            cell.classList.remove('refined');
+            cell.textContent = Math.floor(Math.random() * 10);
+            cell.style.opacity = '1';
+          }
+        }, 2000);
+      }
+      
+      // Afficher l'écran de fin
+      function showCompletionScreen() {
+        // Arrêter le timer
+        clearInterval(timerInterval);
+        
+        // Afficher l'écran de complétion
+        const completionScreen = document.getElementById('completion-screen');
+        completionScreen.style.display = 'flex';
+        
+        // Configurer le bouton de continuation
+        document.getElementById('continue-button').addEventListener('click', function() {
+          localStorage.setItem('severanceGameCompleted', 'true');
+          window.location.href = 'severance-cv.html';
+        });
+      }
+      
+      // Démarrer le timer
+      function startTimer() {
+        startTime = Date.now();
+        timerInterval = setInterval(updateTimer, 1000);
+      }
+      
+      // Mettre à jour le timer
+      function updateTimer() {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+        const seconds = (elapsed % 60).toString().padStart(2, '0');
+        document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+      }
+      
+      // Démarrer le jeu
+      document.addEventListener('DOMContentLoaded', initLoading);
+    </script>
+  </body>
+</html>
