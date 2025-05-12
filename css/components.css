@@ -1,0 +1,236 @@
+/* Styles des composants réutilisables */
+
+/* Variables de couleur pour le thème clair uniquement */
+:root {
+    --apple-blue: #0071e3;
+    --background-color: #f5f5f7;
+    --text-color: #1d1d1f;
+    --card-bg: #ffffff;
+}
+
+/* Cartes style Apple */
+.apple-card {
+    border-radius: 16px;
+    background: #fafafa;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.apple-card:hover {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
+}
+
+.btn-apple {
+    background: var(--apple-blue);
+    border-radius: 20px;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-apple:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+}
+
+.btn-apple:active {
+    transform: translateY(0);
+}
+
+.progress-bar {
+    position: relative;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-value {
+    position: absolute;
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #0071e3, #42a5f5);
+    animation: progress-animation 1.5s ease-out forwards;
+    transform-origin: left;
+    transform: scaleX(0);
+}
+
+@keyframes progress-animation {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+}
+
+/* Navigation - version simplifiée sans mode sombre */
+.apple-nav {
+    font-weight: 500;
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.apple-nav:hover {
+    color: var(--apple-blue);
+}
+
+.navbar {
+    background-color: rgba(255, 255, 255, 0.9);
+    position: relative;
+}
+
+/* Positionnement correct du bouton calculatrice à droite */
+#toggleCalculator {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    padding: 1.5rem;
+}
+
+#toggleCalculator {
+    position: right relative;
+    right: 50px;
+    padding: 1.5rem;
+    align-items: right;
+    justify-content: right;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stuck {
+    animation: fadeInDown 0.5s forwards;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Effets et animations */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.appear {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-from-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-from-left.appear {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.fade-from-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-from-right.appear {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.scale-in {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.scale-in.appear {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.hover-scale {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hover-scale:hover {
+    transform: scale(1.03);
+}
+
+.shadow-subtle {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 4px 8px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.3s ease;
+}
+
+.shadow-subtle:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.bg-blur {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Style de la calculatrice - version nettoyée */
+.calculatrice-secrete {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    width: 300px;
+    z-index: 40;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.calculatrice-secrete.visible {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transform: scale(1);
+}
+
+.calculator-btn {
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.calculator-btn:active {
+    transform: scale(0.95);
+}
+
+/* Style du CV */
+.cv-card {
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03), 
+                0 2px 4px 0 rgba(0, 0, 0, 0.02),
+                0 8px 24px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    height: 100%;
+}
+
+.cv-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03), 
+                0 4px 12px 0 rgba(0, 0, 0, 0.05),
+                0 12px 40px rgba(0, 0, 0, 0.1);
+}
