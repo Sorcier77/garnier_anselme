@@ -1,0 +1,251 @@
+/* Styles pour la calculatrice */
+.calculatrice-secrete {
+    position: fixed;
+    bottom: 60px;
+    right: -300px; /* Commence hors écran */
+    width: 220px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    transition: right 0.3s ease-in-out;
+    padding: 10px;
+    padding-bottom: 5px;
+    overflow: hidden;
+    max-height: 340px;
+    opacity: 0.7; /* Légère transparence par défaut */
+}
+
+.calculatrice-secrete.visible {
+    right: 20px; /* Apparaît à droite quand la classe visible est ajoutée */
+    opacity: 0.9; /* Plus opaque quand visible */
+}
+
+.calculatrice-secrete:hover {
+    opacity: 1; /* Pleinement opaque au survol */
+}
+
+#calculatorScreen {
+    background-color: rgba(30, 41, 59, 0.95); /* Légère transparence */
+    color: white;
+    font-family: monospace;
+    font-size: 18px;
+    text-align: right;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+
+.calc-table {
+    width: 100%;
+    border-spacing: 3px;
+    border-collapse: separate;
+    table-layout: fixed;
+}
+
+.calc-table td {
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    height: 40px;
+}
+
+.calculator-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+    margin: 0 auto;
+    padding: 0;
+    opacity: 0.7; /* Transparence des boutons par défaut */
+}
+
+/* Effet de hover - augmente l'opacité quand la souris est dessus */
+.calculator-btn:hover {
+    opacity: 1;
+}
+
+.calculator-btn:active {
+    transform: scale(0.95);
+    opacity: 1;
+}
+
+.calculator-btn.equals-btn {
+    height: 84px;
+    border-radius: 20px;
+    background-color: #3b82f6;
+    color: white;
+    width: 100%;
+    opacity: 0.75; /* Plus de transparence sur le bouton égal */
+}
+
+.calculator-btn.equals-btn:hover {
+    opacity: 1;
+    background-color: #2563eb;
+}
+
+.calculator-btn.zero-btn {
+    width: 100%;
+    border-radius: 20px;
+    background-color: #f3f4f6;
+}
+
+.calculator-btn.digit-btn {
+    background-color: #f3f4f6;
+}
+
+.calculator-btn.digit-btn:hover {
+    background-color: #f9fafb;
+}
+
+.calculator-btn.op-btn {
+    background-color: #e5e7eb;
+}
+
+.calculator-btn.op-btn:hover {
+    background-color: #d1d5db;
+}
+
+#toggleCalculator.active {
+    color: #3b82f6;
+    background-color: #f3f4f6;
+    opacity: 1; /* Toujours pleinement visible quand actif */
+}
+
+#toggleCalculator {
+    opacity: 0.8; /* Légère transparence pour le bouton toggle */
+    transition: opacity 0.2s;
+}
+
+#toggleCalculator:hover {
+    opacity: 1;
+}
+
+#bruteForceBtn, #resetBtn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    height: auto;
+    width: auto;
+    cursor: pointer;
+    opacity: 1;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    font-size: 1rem;
+    margin: 0 5px;
+    min-width: 120px;
+    text-align: center; /* Centrer le texte horizontalement */
+    line-height: normal; /* Aide à centrer verticalement */
+    -webkit-font-smoothing: antialiased;
+    /* Ajouter ces propriétés pour résoudre le problème de zone de clic */
+    position: relative;
+    z-index: 10 !important; /* Plus élevé que le reste */
+    pointer-events: auto !important; /* Forcer la capture des événements de clic */
+    touch-action: manipulation; /* Améliore la réponse tactile */
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* Supprime le highlight par défaut sur iOS */
+    isolation: isolate; /* Crée un nouveau contexte d'empilement */
+}
+
+#bruteForceBtn {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    -webkit-transform: translateZ(0); /* Force l'accélération matérielle */
+    transform: translateZ(0); /* Ajouter également la version standard */
+    /* Assurer que le texte est cliquable */
+    user-select: none; /* Empêcher la sélection du texte */
+}
+
+#bruteForceBtn:hover {
+    background-image: linear-gradient(90deg, #2563eb, #3b82f6); /* Légèrement plus foncé au survol */
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+#resetBtn {
+    background: transparent;
+    color: #6b7280;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+}
+
+#resetBtn:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+#bruteForceBtn:focus, #resetBtn:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Ajoutez ceci pour l'élément affichant votre interface terminal */
+.terminal-interface {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform; /* Indique au navigateur qu'il doit optimiser les transformations */
+    overflow: hidden;
+    position: relative;
+    isolation: isolate; /* Crée un nouveau contexte d'empilement */
+    contain: layout paint; /* Améliore les performances et confine les effets de peinture */
+}
+
+/* Ajouter à la fin du fichier ou dans la section appropriée */
+
+.screen-scroll-container {
+    -webkit-overflow-scrolling: touch; /* Améliore le défilement sur les appareils iOS */
+    overflow-y: auto;
+    position: relative; /* Assure un contexte de positionnement correct */
+    z-index: 1; /* Évite les problèmes d'empilement */
+    -webkit-transform: translateZ(0); /* Force l'accélération matérielle */
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden; /* Empêche les problèmes de flickering */
+    backface-visibility: hidden;
+    will-change: transform; /* Indique au navigateur qu'il faut optimiser */
+    /* Ajouter ces propriétés pour confiner le contenu */
+    max-height: 400px; /* Ajustez selon vos besoins */
+    overflow: hidden; /* Empêche le débordement */
+    contain: content; /* Confine le contenu dans son conteneur */
+}
+
+#mac-typing-text {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: monospace; /* Garantit la cohérence de la police */
+    white-space: pre-wrap; /* Préserve les espaces et retours à la ligne */
+    word-break: break-word; /* Évite les problèmes de débordement horizontal */
+    position: relative; /* Crée un contexte de positionnement correct */
+    /* Ajouter ceci pour s'assurer que le contenu ne déborde pas */
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.cursor {
+    position: relative; /* Assurez-vous que le curseur est correctement positionné */
+    z-index: 2; /* Au-dessus du texte */
+    -webkit-transform: translateZ(0); /* Force l'accélération matérielle */
+    transform: translateZ(0);
+}
+
+/* S'assurer que le conteneur parent ne bloque pas les clics */
+.calculator-controls, .calculator-container {
+    pointer-events: auto;
+    position: relative;
+    z-index: 10; /* Même niveau que les boutons */
+    isolation: isolate;
+}
+
+
