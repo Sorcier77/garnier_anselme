@@ -1,0 +1,75 @@
+:root {
+  --bg-color: #010A13;
+  --fg-color: #ABFFE9;
+  --bin-wo: #05C3A8;
+  --bin-fc: #1EEFFF;
+  --bin-dr: #DF81D5;
+  --bin-ma: #F9ECBB;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--fg-color);
+  overflow: hidden;
+}
+
+.completion-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(1, 10, 19, 0.9);
+  color: var(--fg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', Courier, monospace;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.completion-screen.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.completion-content {
+  text-align: center;
+  max-width: 500px;
+  padding: 40px;
+  border: 1px solid var(--fg-color);
+  background-color: rgba(1, 10, 19, 0.95);
+}
+
+.completion-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.completion-message {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.completion-button {
+  background: none;
+  border: 1px solid var(--fg-color);
+  color: var(--fg-color);
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: 'Courier New', Courier, monospace;
+  transition: all 0.3s ease;
+}
+
+.completion-button:hover {
+  background-color: var(--fg-color);
+  color: var(--bg-color);
+}

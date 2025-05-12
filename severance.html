@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Severance Number Grid</title>
+    <link rel="stylesheet" href="css/severance.css">
+    <style>
+        /* Style pour le bouton de retour au profil */
+        .profile-button {
+        
+            background-color: #5dd8d9;
+            color: black;
+            border: 1px solid #5dd8d9;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-family: monospace;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 30;
+            transition: all 0.3s ease;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+        
+        .profile-button:hover {
+            background-color: black;
+            color: #5dd8d9;
+            box-shadow: 0 0 10px #5dd8d9;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .profile-button.active {
+            animation: pulse 0.5s;
+        }
+
+        /* Style pour l'indicateur de pourcentage dans le logo inner */
+        .logo-inner {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .completion-percentage {
+            position: absolute;
+            font-size: 12px;
+            font-weight: bold;
+            color: #5dd8d9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Bouton pour retourner au profil -->
+    
+
+    <div class="container">
+        <div class="header">
+            <div class="username">@sorcier77</div>
+            <button id="profileButton" class="profile-button">RETOUR AU PROFIL</button>
+
+            <div class="logo">
+                <div class="logo-inner">
+                    <span class="completion-percentage" id="completion-percentage">0%</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Restauration de la grid-container avec son contenu -->
+        <div class="grid-container">
+            <div class="highlight"></div>
+            <div class="focus-numbers">
+                <span id="focus-number1">6</span>
+                <span id="focus-number2">6</span>
+                <span id="focus-number3">7</span>
+            </div>
+            <div id="number-grid"></div>
+        </div>
+        
+        <div class="footer">
+            <div class="bins">
+                <div class="bin">
+                    01
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 77%;"></div>
+                    </div>
+                </div>
+                <div class="bin">
+                    02
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 62%;"></div>
+                    </div>
+                </div>
+                <div class="bin">
+                    03
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 64%;"></div>
+                    </div>
+                </div>
+                <div class="bin">
+                    04
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 75%;"></div>
+                    </div>
+                </div>
+                <div class="bin">
+                    05
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+    <script src="js/severance-grid.js"></script>
+    
+    <!-- Script pour le bouton de retour au profil - version simplifiée et stable -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Élément de pourcentage et bouton
+            const percentageElement = document.getElementById('completion-percentage');
+            const profileButton = document.getElementById('profileButton');
+            
+            // Initialiser le pourcentage à zéro au démarrage
+            if (percentageElement) {
+                percentageElement.textContent = '0%';
+            }
+            
+            // Gestionnaire du bouton profil
+            if (profileButton) {
+                profileButton.addEventListener('click', function() {
+                    // Activer l'animation du bouton
+                    profileButton.classList.add('active');
+                    
+                    // Marquer le jeu comme complété pour débloquer la page CV
+                    localStorage.setItem('severanceGameCompleted', 'true');
+                    
+                    // Rediriger après un délai
+                    setTimeout(function() {
+                        window.location.href = 'severance-cv.html';
+                    }, 300);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Macro Data Refinement - Lumon Industries</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            --severance-blue: #aef6ff;
+            --severance-dark: #0a1e3b;
+            --severance-accent: #56cbdb;
+            --lumon-blue: #00b3e5;
+        }
+        
+        body {
+            background-color: var(--severance-dark);
+            color: var(--severance-blue);
+            font-family: 'VT323', monospace;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .severance-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .lumon-header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--severance-accent);
+        }
+        
+        .lumon-logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 2rem;
+            background-color: var(--lumon-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(174, 246, 255, 0.4);
+        }
+        
+        .lumon-title {
+            font-size: 3rem;
+            margin: 0;
+            text-shadow: 0 0 10px var(--severance-blue);
+        }
+        
+        .lumon-subtitle {
+            font-size: 1.5rem;
+            margin: 1rem 0 0;
+            opacity: 0.8;
+        }
+        
+        .mdr-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            border: 1px solid var(--severance-accent);
+            background-color: rgba(10, 30, 59, 0.5);
+        }
+        
+        .mdr-section h2 {
+            border-bottom: 1px solid var(--severance-accent);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .data-card {
+            border: 1px solid var(--severance-accent);
+            padding: 1.5rem;
+            background-color: rgba(174, 246, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .data-card:hover {
+            box-shadow: 0 0 15px rgba(174, 246, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .data-card h3 {
+            margin-top: 0;
+            color: var(--severance-accent);
+        }
+        
+        .data-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .data-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dotted rgba(174, 246, 255, 0.2);
+        }
+        
+        .data-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .terminal-section {
+            font-family: 'VT323', monospace;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border: 1px solid var(--severance-accent);
+            margin: 2rem 0;
+            overflow: auto;
+        }
+        
+        .terminal-text {
+            color: var(--severance-blue);
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--severance-blue);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--severance-accent);
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background-color: var(--severance-accent);
+            color: var(--severance-dark);
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.03) 50%,
+                rgba(255, 255, 255, 0) 51%
+            );
+            background-size: 100% 4px;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        
+        .crt-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.8);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .quote-section {
+            text-align: center;
+            padding: 3rem 0;
+            font-size: 1.5rem;
+            font-style: italic;
+            opacity: 0.8;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="crt-effect"></div>
+    
+    <div class="severance-container">
+        <header class="lumon-header">
+            <div class="lumon-logo">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L18 6V16L12 21L6 16V6L12 2Z" stroke="white" stroke-width="2" />
+                    <circle cx="12" cy="12" r="4" stroke="white" stroke-width="2" />
+                </svg>
+            </div>
+            <h1 class="lumon-title">LUMON INDUSTRIES</h1>
+            <p class="lumon-subtitle">MACRO DATA REFINEMENT DIVISION</p>
+        </header>
+        
+        <section class="mdr-section">
+            <h2>PROFIL EMPLOYÉ #8722</h2>
+            <div class="terminal-section">
+                <div class="terminal-text">
+                    &gt; INITIALISATION SYSTÈME LUMON<br>
+                    &gt; AUTORISATION MDR: NIVEAU 3<br>
+                    &gt; ACCÈS ACCORDÉ: PROFIL #8722<br>
+                    <br>
+                    ------------------------<br>
+                    SUJET: GARNIER, ANSELME<br>
+                    ------------------------<br>
+                    DIVISION: DÉVELOPPEMENT [MDR]<br>
+                    STATUT: RAFFINEMENT EN COURS<br>
+                    <br>
+                    ÉVALUATION MDR: <span style="color: #56cbdb;">SUPÉRIEURE</span><br>
+                    <br>
+                    &gt; QUATRIÈME TRIMESTRE ACHEVÉ<br>
+                    &gt; ÉVALUATION: 94% EFFICACITÉ<br>
+                    &gt; AUCUNE CORRECTION NÉCESSAIRE<br>
+                    <br>
+                    <span class="blink">_</span>
+                </div>
+            </div>
+            
+            <div class="data-grid">
+                <div class="data-card">
+                    <h3>RAFFINEMENT DE DONNÉES</h3>
+                    <ul class="data-list">
+                        <li>• Front-End: 87%</li>
+                        <li>• Back-End: 82%</li>
+                        <li>• Systèmes: 75%</li>
+                        <li>• Base de Données: 83%</li>
+                        <li>• Optimisation: 91%</li>
+                    </ul>
+                </div>
+                
+                <div class="data-card">
+                    <h3>APTITUDES SOCIALES</h3>
+                    <ul class="data-list">
+                        <li>• Travail d'équipe: 78%</li>
+                        <li>• Communication: 82%</li>
+                        <li>• Leadership: 65%</li>
+                        <li>• Adaptabilité: 89%</li>
+                        <li>• Initiative: 92%</li>
+                    </ul>
+                </div>
+                
+                <div class="data-card">
+                    <h3>COMPÉTENCES TECHNIQUES</h3>
+                    <ul class="data-list">
+                        <li>• React / Next.js</li>
+                        <li>• Node.js / Express</li>
+                        <li>• Docker / CI/CD</li>
+                        <li>• AWS / Cloud</li>
+                        <li>• MongoDB / MySQL</li>
+                    </ul>
+                </div>
+                
+                <div class="data-card">
+                    <h3>CONFORMITÉ & LOYAUTÉ</h3>
+                    <ul class="data-list">
+                        <li>• Conformité: 96%</li>
+                        <li>• Fiabilité: 94%</li>
+                        <li>• Ponctualité: 98%</li>
+                        <li>• Loyauté: 100%</li>
+                        <li>• MÉRITE: WAFFLE PARTY ✓</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section class="quote-section">
+            "La vie et le travail ne font qu'un à Lumon. Raffinons pour un meilleur lendemain."
+        </section>
+        
+        <a href="index.html" class="back-link">RETOUR VERS L'EXTÉRIEUR</a>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Version simplifiée - toujours permettre l'accès
+            localStorage.setItem('severanceGameCompleted', 'true');
+            
+            // Effet de frappe pour le terminal
+            const terminalText = document.querySelector('.terminal-text');
+            if (terminalText) {
+                const originalText = terminalText.innerHTML;
+                terminalText.innerHTML = '';
+                
+                let charIndex = 0;
+                const typeEffect = setInterval(() => {
+                    if (charIndex < originalText.length) {
+                        terminalText.innerHTML += originalText.charAt(charIndex);
+                        charIndex++;
+                        
+                        // Scroll vers le bas pendant l'animation
+                        terminalText.parentElement.scrollTop = terminalText.parentElement.scrollHeight;
+                    } else {
+                        clearInterval(typeEffect);
+                    }
+                }, 30);
+            }
+            
+            // Animation des cartes
+            const dataCards = document.querySelectorAll('.data-card');
+            dataCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                card.style.transitionDelay = `${index * 0.1}s`;
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
