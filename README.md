@@ -149,4 +149,4 @@ Ou ouvre simplement `index.html` dans ton navigateur pour une version statique.
 
 ---
 
-© 2024 Anselme Garnier. Tous droits réservés.
+© 2025 Anselme Garnier. Tous droits réservés.
