@@ -224,22 +224,31 @@
                 });
 
             // Animations
-            document.addEventListener("DOMContentLoaded", function () {
-                const observer = new IntersectionObserver(
-                    (entries) => {
-                        entries.forEach((entry) => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add("fade-in");
-                                observer.unobserve(entry.target);
-                            }
-                        });
-                    },
-                    { threshold: 0.1 },
-                );
-
-                document.querySelectorAll("section").forEach((section) => {
-                    observer.observe(section);
-                });
+                        // Si votre code utilise déjà addEventListener, assurez-vous qu'il est correctement configuré
+            document.addEventListener('DOMContentLoaded', function() {
+                // Configurer le bouton de brute force
+                const bruteForceBtn = document.getElementById('bruteForceBtn');
+                if (bruteForceBtn) {
+                    // Supprimer tout gestionnaire existant pour éviter les doublons
+                    bruteForceBtn.removeEventListener('click', setupBruteForce);
+                    // Ajouter un nouveau gestionnaire direct
+                    bruteForceBtn.addEventListener('click', function(e) {
+                        console.log('Brute Force button clicked');
+                        e.preventDefault();
+                        setupBruteForce();
+                    });
+                }
+                
+                // De même pour le bouton reset
+                const resetBtn = document.getElementById('resetBtn');
+                if (resetBtn) {
+                    resetBtn.removeEventListener('click', function() {location.reload()});
+                    resetBtn.addEventListener('click', function(e) {
+                        console.log('Reset button clicked');
+                        e.preventDefault();
+                        location.reload();
+                    });
+                }
             });
         </script>
     </body>

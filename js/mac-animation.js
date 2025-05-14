@@ -203,8 +203,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(() => {
                     animationState = 'hidden';
                     
-                    // Afficher la calculatrice seulement quand l'animation de l'écran est terminée
-                    if (calculatrice) calculatrice.classList.add('visible');
+                    // Ne plus afficher la calculatrice automatiquement
+                    // if (calculatrice) calculatrice.classList.add('visible');
                 }, 600);
             }
             if (scrollInstruction) scrollInstruction.style.opacity = 0;
@@ -216,8 +216,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 macContainer.style.transform = 'translate(-50%, -50%) translateZ(-200px) rotateX(20deg) scale(0.5)';
                 macContainer.style.opacity = '0';
                 
-                // Afficher la calculatrice
-                if (calculatrice) calculatrice.classList.add('visible');
+                // Ne plus afficher la calculatrice automatiquement
+                // if (calculatrice) calculatrice.classList.add('visible');
             }
         }
         

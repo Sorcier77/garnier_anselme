@@ -140,7 +140,11 @@
     opacity: 1;
 }
 
+/* Modifier les styles des boutons Brute Force et Reset */
+
 #bruteForceBtn, #resetBtn {
+    position: relative;
+    z-index: 50 !important;  /* Augmenter le z-index pour s'assurer qu'il est au-dessus des autres éléments */
     display: inline-block;
     padding: 0.5rem 1rem;
     height: auto;
@@ -152,16 +156,20 @@
     font-size: 1rem;
     margin: 0 5px;
     min-width: 120px;
-    text-align: center; /* Centrer le texte horizontalement */
-    line-height: normal; /* Aide à centrer verticalement */
+    text-align: center;
+    line-height: normal;
     -webkit-font-smoothing: antialiased;
-    /* Ajouter ces propriétés pour résoudre le problème de zone de clic */
+    /* Résoudre le problème de zone de clic */
+    pointer-events: auto !important;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+/* S'assurer que le conteneur parent permet également les clics */
+.text-center.mt-8.fade-in {
     position: relative;
-    z-index: 10 !important; /* Plus élevé que le reste */
-    pointer-events: auto !important; /* Forcer la capture des événements de clic */
-    touch-action: manipulation; /* Améliore la réponse tactile */
-    -webkit-tap-highlight-color: rgba(0,0,0,0); /* Supprime le highlight par défaut sur iOS */
-    isolation: isolate; /* Crée un nouveau contexte d'empilement */
+    z-index: 50;
+    pointer-events: auto;
 }
 
 #bruteForceBtn {
