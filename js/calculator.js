@@ -10,24 +10,32 @@ let resetScreen = false;
 
 // Initialisation de la calculatrice au chargement du document
 document.addEventListener("DOMContentLoaded", function() {
+    console.log("Document chargé, initialisation de la calculatrice");
+    
     // Gestion du bouton de la calculatrice
     const toggleCalculatorBtn = document.getElementById('toggleCalculator');
     const calculatrice = document.getElementById('calculatrice');
     
     if (toggleCalculatorBtn && calculatrice) {
-        // La calculette ne se montre que lorsqu'on appuie sur le bouton (inversé)
-        calculatrice.classList.remove('visible'); // S'assurer qu'elle est cachée au départ
+        console.log("Bouton et calculatrice trouvés");
         
-        toggleCalculatorBtn.addEventListener('click', function() {
+        // S'assurer que la calculatrice est cachée au départ
+        calculatrice.classList.remove('visible');
+        
+        toggleCalculatorBtn.addEventListener('click', function(e) {
+            console.log("Clic sur le bouton calculatrice");
+            e.preventDefault(); // Empêcher le comportement par défaut
             calculatrice.classList.toggle('visible');
             toggleCalculatorBtn.classList.toggle('active');
         });
+    } else {
+        console.error("Bouton calculatrice ou calculatrice non trouvés", 
+                     { btn: !!toggleCalculatorBtn, calc: !!calculatrice });
     }
     
     // Initialiser l'affichage de la calculatrice
     updateScreen();
 });
-
 // Fonctions de la calculatrice
 function updateScreen() {
     const screen = document.getElementById('calculatorScreen');
