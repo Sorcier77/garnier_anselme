@@ -80,21 +80,42 @@
     position: relative;
 }
 
-/* Positionnement correct du bouton calculatrice à droite */
+/* Positionnement correct du bouton calculatrice */
 #toggleCalculator {
     position: absolute;
     top: 50%;
-    right: 0;
+    right: 15px;
     transform: translateY(-50%);
-    padding: 1.5rem;
+    padding: 0.75rem;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+    z-index: 10;
 }
 
-#toggleCalculator {
-    position: right relative;
-    right: 50px;
-    padding: 1.5rem;
-    align-items: right;
-    justify-content: right;
+#toggleCalculator.active {
+    color: #3b82f6;
+    background-color: #f3f4f6;
+    opacity: 1;
+}
+
+#toggleCalculator:hover {
+    opacity: 1;
+}
+
+/* Ajuster pour les écrans mobiles */
+@media (max-width: 768px) {
+    #toggleCalculator {
+        position: absolute; 
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    /* S'assurer que le conteneur parent est en position relative */
+    .navbar-end {
+        position: relative;
+        flex: 1;
+    }
 }
 
 .container {

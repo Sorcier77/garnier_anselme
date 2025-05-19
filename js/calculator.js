@@ -10,31 +10,40 @@ let resetScreen = false;
 
 // Initialisation de la calculatrice au chargement du document
 document.addEventListener("DOMContentLoaded", function() {
-    console.log("Document chargé, initialisation de la calculatrice");
-    
-    // Gestion du bouton de la calculatrice
     const toggleCalculatorBtn = document.getElementById('toggleCalculator');
+    const mobileCalcButton = document.getElementById('mobileCalcButton');
     const calculatrice = document.getElementById('calculatrice');
     
-    if (toggleCalculatorBtn && calculatrice) {
-        console.log("Bouton et calculatrice trouvés");
-        
-        // S'assurer que la calculatrice est cachée au départ
-        calculatrice.classList.remove('visible');
-        
-        toggleCalculatorBtn.addEventListener('click', function(e) {
-            console.log("Clic sur le bouton calculatrice");
-            e.preventDefault(); // Empêcher le comportement par défaut
+    // Fonction commune pour basculer l'affichage de la calculatrice
+    function toggleCalculatorDisplay(e) {
+        if (e) e.preventDefault();
+        if (calculatrice) {
             calculatrice.classList.toggle('visible');
-            toggleCalculatorBtn.classList.toggle('active');
-        });
-    } else {
-        console.error("Bouton calculatrice ou calculatrice non trouvés", 
-                     { btn: !!toggleCalculatorBtn, calc: !!calculatrice });
+        }
+        
+        // Si c'est le bouton mobile, fermer le menu dropdown après clic
+        const dropdownMenu = document.querySelector('.dropdown-content');
+        if (dropdownMenu && dropdownMenu.classList.contains('dropdown-open')) {
+            dropdownMenu.classList.remove('dropdown-open');
+        }
     }
     
-    // Initialiser l'affichage de la calculatrice
-    updateScreen();
+    // Ajouter l'écouteur au bouton desktop
+    if (toggleCalculatorBtn) {
+        toggleCalculatorBtn.addEventListener('click', toggleCalculatorDisplay);
+    }
+    
+    // Ajouter l'écouteur au bouton mobile
+    if (mobileCalcButton) {
+        mobileCalcButton.addEventListener('click', toggleCalculatorDisplay);
+    }
+    
+    // Écouteur pour fermer la calculatrice avec Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && calculatrice && calculatrice.classList.contains('visible')) {
+            calculatrice.classList.remove('visible');
+        }
+    });
 });
 // Fonctions de la calculatrice
 function updateScreen() {
