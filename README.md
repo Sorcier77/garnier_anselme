@@ -2,6 +2,9 @@
 
 Bienvenue sur le dépôt de mon portfolio interactif, conçu pour présenter mon univers, mes compétences et mes projets de façon originale, immersive et ludique. Ce projet est une vitrine technique et créative, inspirée par la série **Severance** et enrichie de nombreux clins d'œil, fonctionnalités cachées et expériences utilisateur uniques. **Testez de taper `M`, `D`, `R` sur la page.**
 
+
+![aperçu](<aperçu.png>)
+
 ---
 
 ## 📚 Sommaire
@@ -21,6 +24,8 @@ Bienvenue sur le dépôt de mon portfolio interactif, conçu pour présenter mon
 Ce portfolio va bien au-delà d'un simple CV en ligne : il propose une expérience interactive, narrative et personnalisée, où chaque visiteur peut explorer mes réalisations, découvrir des surprises cachées et interagir avec des modules inspirés de l'univers de Severance (Lumon Industries).
 
 L'objectif est de démontrer mes compétences en développement web moderne, particulièrement avec **Tailwind CSS** et **DaisyUI** qui sont utilisés massivement dans ce projet, tout en conservant des fichiers CSS personnalisés pour des besoins spécifiques. Le tout avec un focus sur l'UX/UI et la créativité.
+
+J'ai essayé de fractionner les composant du index.html mais j'ai abandonné. Si vous voulez essayer les components sont déjà diviser dans le dossier components. Il faudrait utiliser un framework pour associer les components. 
 
 ---
 
@@ -81,6 +86,146 @@ package.json      # Dépendances incluant Tailwind CSS et DaisyUI
 ```
 
 ---
+
+## Utilisation de DaisyUI et Tailwind
+
+
+## Classes Tailwind CSS dans le projet
+
+### Mise en page responsive
+
+Le système de grille Tailwind est utilisé pour créer des layouts flexibles qui s'adaptent à différentes tailles d'écran :
+
+```html
+<div class="cv-main grid grid-cols-1 lg:grid-cols-3 gap-8">
+```
+
+Ce code crée une disposition en une seule colonne sur mobile, et trois colonnes sur les grands écrans.
+
+### Espacement et marges
+
+Les utilités de padding (`p-`, `px-`, `py-`) et margin (`m-`, `mx-`, `my-`) sont largement utilisées :
+
+```html
+<div class="card-body p-8">
+    <h3 class="text-2xl font-semibold mb-4">Design & UI/UX</h3>
+    <div class="h-1 w-20 bg-blue-500 rounded-full mb-6"></div>
+```
+
+### Flexbox et alignement
+
+Les classes flex de Tailwind facilitent l'alignement des éléments :
+
+```html
+<div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
+```
+
+Cette ligne change l'orientation des éléments de colonne à ligne selon la taille de l'écran.
+
+### Couleurs et personnalisation
+
+Tailwind permet l'utilisation facile de couleurs prédéfinies :
+
+```html
+<div class="progress-value" style="width: 90%; background: linear-gradient(90deg, #9333ea, #c084fc);"></div>
+```
+
+## Composants DaisyUI
+
+DaisyUI ajoute une couche de composants prêts à l'emploi par-dessus Tailwind CSS. Voici quelques exemples d'utilisation dans le portfolio :
+
+### Navbar
+
+```html
+<div class="navbar bg-white shadow-sm fixed top-0 w-full z-50">
+```
+
+La classe `navbar` est un composant DaisyUI qui crée une barre de navigation stylisée.
+
+### Boutons
+
+```html
+<button id="toggleCalculator" class="btn btn-ghost btn-circle hidden md:flex">
+```
+
+Les classes `btn`, `btn-ghost` et `btn-circle` sont des styles de boutons DaisyUI.
+
+### Cards
+
+```html
+<div class="card bg-white shadow-xl max-w-2xl mx-auto apple-card scale-in">
+    <div class="card-body p-8">
+```
+
+Les classes `card` et `card-body` sont des composants DaisyUI pour créer des cartes stylisées.
+
+### Alerts
+
+```html
+<div id="result-message" class="alert hidden">
+    <!-- Message de résultat ici -->
+</div>
+```
+
+La classe `alert` de DaisyUI crée des messages d'alerte stylisés.
+
+## Combinaison avec CSS personnalisé
+
+J'ai combiné les classes utilitaires de Tailwind avec du CSS personnalisé pour des fonctionnalités plus complexes :
+
+```css
+.apple-card {
+    border-radius: 16px;
+    background: #fafafa;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+```
+
+Ce CSS personnalisé est ensuite appliqué avec la classe `.apple-card` dans vos éléments HTML.
+
+## Exemples de fonctionnalités avancées
+
+### Thématisation
+
+DaisyUI permet de facilement changer de thème en ajoutant un attribut `data-theme` à l'élément HTML :
+
+```html
+<html lang="fr" data-theme="light">
+```
+
+### Animation et interaction
+
+Combinaison de Tailwind et CSS personnalisé pour créer des animations riches :
+
+```html
+<div class="apple-card scale-in" style="animation-delay: 0.1s; background: white;">
+```
+
+### Barres de progression
+
+Utilisation des styles Tailwind pour créer des indicateurs visuels de compétence :
+
+```html
+<div class="progress-bar">
+    <div class="progress-value" style="width: 92%"></div>
+</div>
+```
+
+## Bonnes pratiques 
+
+1. **Mobile-first design** : Utilisation cohérente de préfixes responsive (`md:`, `lg:`)
+
+2. **Composants modulaires** : Structure du projet avec des composants réutilisables dans le dossier components
+
+3. **Personnalisation avancée** : Extension des fonctionnalités de base de Tailwind et DaisyUI avec du CSS ciblé pour des besoins spécifiques
+
+4. **Architecture CSS organisée** : Séparation en fichiers CSS thématiques (layout.css, components.css, animations.css)
+
+5. **Performance** : Utilisation judicieuse des classes utilitaires directement dans le HTML pour minimiser le CSS global
+
+Ce mélange de Tailwind, DaisyUI et CSS personnalisé permet d'obtenir une interface moderne, responsive et hautement personnalisée, tout en maintenant un code propre et bien structuré.
 
 ## 🚀 Installation & Lancement
 
