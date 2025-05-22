@@ -1,6 +1,6 @@
 # Portfolio Anselme Garnier
 
-Bienvenue sur le dépôt de mon portfolio interactif, conçu pour présenter mon univers, mes compétences et mes projets de façon originale, immersive et ludique. Ce projet est une vitrine technique et créative, inspirée par la série **Severance** et enrichie de nombreux clins d’œil, fonctionnalités cachées et expériences utilisateur uniques.
+Bienvenue sur le dépôt de mon portfolio interactif, conçu pour présenter mon univers, mes compétences et mes projets de façon originale, immersive et ludique. Ce projet est une vitrine technique et créative, inspirée par la série **Severance** et enrichie de nombreux clins d'œil, fonctionnalités cachées et expériences utilisateur uniques.
 
 ---
 
@@ -18,23 +18,23 @@ Bienvenue sur le dépôt de mon portfolio interactif, conçu pour présenter mon
 
 ## 🧑‍💻 À propos du projet
 
-Ce portfolio va bien au-delà d’un simple CV en ligne : il propose une expérience interactive, narrative et personnalisée, où chaque visiteur peut explorer mes réalisations, découvrir des surprises cachées et interagir avec des modules inspirés de l’univers de Severance (Lumon Industries).
+Ce portfolio va bien au-delà d'un simple CV en ligne : il propose une expérience interactive, narrative et personnalisée, où chaque visiteur peut explorer mes réalisations, découvrir des surprises cachées et interagir avec des modules inspirés de l'univers de Severance (Lumon Industries).
 
-L’objectif est de démontrer mes compétences en développement web moderne (HTML, CSS, JavaScript, Tailwind, DaisyUI, animations avancées), mon sens du détail UX/UI, et ma créativité à travers des fonctionnalités inattendues.
+L'objectif est de démontrer mes compétences en développement web moderne, particulièrement avec **Tailwind CSS** et **DaisyUI** qui sont utilisés massivement dans ce projet, tout en conservant des fichiers CSS personnalisés pour des besoins spécifiques. Le tout avec un focus sur l'UX/UI et la créativité.
 
 ---
 
 ## ✨ Fonctionnalités principales
 
-- **Interface responsive** : Adaptée à tous les écrans (mobile, tablette, desktop)
-- **Thème dynamique** : Sombre/clair, transitions douces, respect des préférences système
-- **Navigation immersive** : Menu animé, transitions fluides, effets de survol et feedback visuel
-- **Section Projets** : Fiches détaillées, filtres dynamiques, liens directs vers les repos/démos
-- **Timeline de parcours** : Visualisation animée de mon parcours pro et académique
-- **Compétences interactives** : Badges, jauges animées, classement par expertise
-- **Blog/Notes** : Articles techniques, retours d’expérience, astuces de dev, recherche instantanée
-- **Contact** : Formulaire validé, notifications de succès/erreur, liens réseaux sociaux, QR code LinkedIn
-- **Accessibilité** : Navigation clavier, contrastes adaptés, textes alternatifs
+- **Interface responsive** : Adaptée à tous les écrans grâce à Tailwind CSS
+- **Thème dynamique** : Sombre/clair avec DaisyUI, transitions douces
+- **Navigation immersive** : Menu animé, transitions fluides, effets de survol et feedback visuel et d'effets au scroll.
+- **Compétences interactives** : Badges Tailwind/DaisyUI, jauges animées, classement par expertise
+- **Contact** : Formulaire validé avec composants DaisyUI, notifications, cette partie est verouillée par un questionnaire à bien remplir (sinon un bouton bruteforce est mis en place pour y accéder)
+- **design reproduit dans le style d'Apple** : le but a été de reproduire le fameux mac 1989. 
+- **Easter Egg severance** : En tapant `MDR` vous avez accès à une partie secrète du site en lien avec la série Severance. 
+- **Reproduction simple d'un jeu de tri de macrodonnées** : j'ai reproduit une base de jeux comme dans la série, vous le trouverez en tapant `MDR` dans le site.
+- **templates créées dans le fichier `severance-effects.html`**
 
 ---
 
@@ -42,45 +42,42 @@ L’objectif est de démontrer mes compétences en développement web moderne (H
 
 Le site regorge de surprises et de références à Severance, pour les fans et les curieux :
 
-### 🧮 Calculatrice Lumon
-- **Activation** : Taper `lumon` ou `calculator` sur n’importe quelle page
-- **Fonctionnalités** : Calculatrice rétro, interface verte sur noir, sons typiques, bugs et messages cachés façon série
+### CV à la Severance pour le profil de l'employé
 
-### 🔓 Terminal Bruteforce
-- **Activation** : Taper `hack` ou `terminal`
-- **Fonctionnalités** : Faux terminal, brute force visuel, défilement de codes, déblocage de "zones secrètes", messages cryptiques
+- **Une page de CV stylisé**
+
 
 ### 🗂️ Mode Macro Data Refinement (MDR)
-- **Activation** : Appuyer sur `M`, `D`, `R` simultanément
-- **Fonctionnalités** : Interface transformée façon bureau Lumon, mini-jeu de tri de données, récompense humoristique à la fin
-
-
+- **Activation** : Appuyer sur `M`, `D`, `R`
+- **Fonctionnalités** : Interface transformée utilisant des composants DaisyUI et Tailwind CSS
 
 ---
 
 ## 🛠️ Technologies & Architecture
 
-- **HTML5 / CSS3** : Structure et styles de base
+- **HTML5** : Structure sémantique
+- **Tailwind CSS** : Utilisé comme framework CSS principal pour la stylisation modulaire et responsive
+- **DaisyUI** : Système de composants basé sur Tailwind pour les éléments d'interface utilisateur
+- **CSS personnalisé** : Fichiers CSS spécifiques pour des animations complexes et styles avancés
 - **JavaScript Vanilla** : Interactivité, animations, easter eggs
-- **Tailwind CSS** : Stylisation utilitaire, thèmes personnalisés
-- **DaisyUI** : Composants UI élégants et accessibles
 - **IntersectionObserver API** : Animations au défilement
 - **Web Audio API** : Effets sonores pour les easter eggs
-- **Font Awesome** : Icônes vectorielles
 
 ### Structure des dossiers
 
 ```
 assets/           # Images, illustrations, logos
 components/       # Fragments HTML réutilisables (header, footer, CV, etc.)
-css/              # Fichiers CSS (styles, animations, thèmes, etc.)
+css/              # Fichiers CSS personnalisés (animations, effets spéciaux, etc.)
+tailwind/         # Configuration Tailwind et fichiers associés
 js/               # Scripts JS (animations, easter eggs, jeux, etc.)
+pages/            # Pages secondaires du site
 index.html        # Page principale du portfolio
 severance.html    # Mini-jeu Severance (grid)
 data-refinement-game.html # Mini-jeu Macro Data Refinement
 severance-cv.html # CV spécial déblocable
 README.md         # Ce fichier
-package.json      # Dépendances et scripts (si build ou outils JS)
+package.json      # Dépendances incluant Tailwind CSS et DaisyUI
 ```
 
 ---
@@ -89,8 +86,8 @@ package.json      # Dépendances et scripts (si build ou outils JS)
 
 ### Prérequis
 
-- Node.js >= 16.x (pour les outils de build éventuels)
-- npm ou yarn (optionnel, si tu veux builder ou tester)
+- Node.js >= 16.x (pour Tailwind CSS et DaisyUI)
+- npm ou yarn
 
 ### Installation
 
@@ -101,6 +98,14 @@ npm install
 # ou
 yarn install
 ```
+### Démarrage
+
+```bash
+npm run start
+````
+
+Accède à [http://localhost:3000](http://127.0.0.1:3000)
+
 
 ### Démarrage en développement
 
@@ -109,44 +114,38 @@ npm run dev
 # ou
 yarn dev
 ```
-Accède à [http://localhost:3000](http://localhost:3000)
+Accède à [http://localhost:3000](http://127.0.0.1:3000)
 
 ### Build production
 
 ```bash
 npm run build
-npm start
 # ou
 yarn build
-yarn start
 ```
 
-Ou ouvre simplement `index.html` dans ton navigateur pour une version statique.
+Le build génère les fichiers CSS optimisés de Tailwind pour la production.
 
 ---
 
 ## 🛠️ Personnalisation & Édition
 
-- **Ajouter un projet** : Modifie `components/competences.html` ou ajoute une carte dans la section projets
-- **Changer les couleurs/thèmes** : Modifie `css/theme-colors.css` ou les variables CSS dans les fichiers concernés
-- **Ajouter un article** : Ajoute un fichier HTML ou Markdown dans un dossier dédié (ex : `/blog/`)
-- **Modifier les easter eggs** : Vois les scripts dans `js/` (ex : `mac-animation.js`, `severance-data.js`)
-- **Traduction** : Centralise les textes dans des fichiers ou variables JS si besoin
+- **Ajouter un projet** : Modifie les composants dans le dossier `components/`
+- **Changer les thèmes** : Modifie la configuration dans `tailwind.config.js` ou les variables DaisyUI
+- **Styles spécifiques** : Utilise les fichiers dans `css/` pour les besoins particuliers
+- **Modifier les easter eggs** : Vois les scripts dans `js/`
 
 ### Conseils
 
-- Utilise VSCode avec les extensions recommandées (ESLint, Prettier, Tailwind CSS IntelliSense)
-- Lance les tests avec `npm test` ou `yarn test` si tu ajoutes des scripts testables
-- Déploie facilement sur Vercel, Netlify ou GitHub Pages
+- Utilise VSCode avec les extensions Tailwind CSS IntelliSense pour une meilleure expérience
+
 
 ---
-
-
 
 > Suggestions, issues ou PR bienvenues !  
-> Merci d’avoir exploré mon univers, et amusez-vous à trouver tous les secrets Lumon…  
-> _"Qu’est-ce que vous faites ici, vraiment ?"_ 🕵️‍♂️
+> Merci d'avoir exploré mon univers, et amusez-vous à trouver tous les secrets Lumon…  
+> _"Qu'est-ce que vous faites ici, vraiment ?"_ 🕵️‍♂️
 
 ---
 
-© 2025 Anselme Garnier. Tous droits réservés.
+© 2025 Sorcier77. Tous droits réservés.
