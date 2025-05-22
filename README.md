@@ -1,6 +1,6 @@
 # Portfolio Anselme Garnier
 
-Bienvenue sur le dépôt de mon portfolio interactif, conçu pour présenter mon univers, mes compétences et mes projets de façon originale, immersive et ludique. Ce projet est une vitrine technique et créative, inspirée par la série **Severance** et enrichie de nombreux clins d'œil, fonctionnalités cachées et expériences utilisateur uniques.
+Bienvenue sur le dépôt de mon portfolio interactif, conçu pour présenter mon univers, mes compétences et mes projets de façon originale, immersive et ludique. Ce projet est une vitrine technique et créative, inspirée par la série **Severance** et enrichie de nombreux clins d'œil, fonctionnalités cachées et expériences utilisateur uniques. **Testez de taper `M`, `D`, `R` sur la page.**
 
 ---
 
